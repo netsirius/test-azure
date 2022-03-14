@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "select1"
+				},
+				{
+					"name": "addpvp"
 				}
 			],
 			"scriptLines": [
@@ -35,13 +38,14 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: true,",
 				"     ignoreNoFilesFound: false) ~> productos",
-				"productos select(mapColumn(",
+				"addpvp select(mapColumn(",
 				"          id_producto = id,",
 				"          name,",
 				"          price",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
+				"productos derive(pvp = price + \"2\") ~> addpvp",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
